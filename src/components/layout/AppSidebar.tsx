@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { 
   Calendar, 
   BookOpen, 
@@ -9,7 +9,8 @@ import {
   Settings, 
   LogOut,
   Menu,
-  X
+  X,
+  Home
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ import { cn } from "@/lib/utils";
 
 const AppSidebar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(true);
 
   const handleLogout = () => {
@@ -25,6 +27,15 @@ const AppSidebar = () => {
     toast.success('Logged out successfully');
     navigate('/auth');
   };
+
+  const sidebarItems = [
+    { to: "/dashboard", icon: <Home size={20} />, label: "Dashboard" },
+    { to: "/dashboard", icon: <User size={20} />, label: "Characters" },
+    { to: "/campaigns", icon: <BookOpen size={20} />, label: "Campaigns" },
+    { to: "/sessions", icon: <Calendar size={20} />, label: "Sessions" },
+    { to: "/party", icon: <Users size={20} />, label: "Party" },
+    { to: "/settings", icon: <Settings size={20} />, label: "Settings" }
+  ];
 
   return (
     <div className={cn(
@@ -54,19 +65,13 @@ const AppSidebar = () => {
       
       <nav className="flex-1 p-2">
         <ul className="space-y-2">
-          {[
-            { to: "/dashboard", icon: <User size={20} />, label: "Characters" },
-            { to: "/campaigns", icon: <BookOpen size={20} />, label: "Campaigns" },
-            { to: "/sessions", icon: <Calendar size={20} />, label: "Sessions" },
-            { to: "/party", icon: <Users size={20} />, label: "Party" },
-            { to: "/settings", icon: <Settings size={20} />, label: "Settings" }
-          ].map((item) => (
-            <li key={item.to}>
+          {sidebarItems.map((item) => (
+            <li key={item.to + item.label}>
               <NavLink 
                 to={item.to}
                 className={({ isActive }) => cn(
                   "flex items-center p-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent/20 transition-colors",
-                  isActive ? "bg-sidebar-accent/20 text-dnd-gold" : "",
+                  (isActive || location.pathname === item.to) ? "bg-sidebar-accent/20 text-dnd-gold" : "",
                   !isExpanded ? "justify-center" : ""
                 )}
               >

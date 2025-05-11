@@ -11,7 +11,7 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <ProtectedRoute>
-      <div className="flex h-screen">
+      <div className="flex h-screen overflow-hidden">
         <AppSidebar />
         <ScrollArea className="flex-1">
           <div className="p-6 max-w-[1500px] mx-auto">

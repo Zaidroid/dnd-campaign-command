@@ -11,6 +11,10 @@ import Dashboard from "./pages/Dashboard";
 import CharacterDetail from "./pages/CharacterDetail";
 import CharacterCreate from "./pages/CharacterCreate";
 import CampaignsPage from "./pages/CampaignsPage";
+import SessionsPage from "./pages/SessionsPage";
+import PartyPage from "./pages/PartyPage";
+import SettingsPage from "./pages/SettingsPage";
+import DiceRoller from "./components/dice/DiceRoller";
 
 const queryClient = new QueryClient();
 
@@ -27,8 +31,12 @@ const App = () => (
           <Route path="/character/:id" element={<CharacterDetail />} />
           <Route path="/character/create" element={<CharacterCreate />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
+          <Route path="/sessions" element={<SessionsPage />} />
+          <Route path="/party" element={<PartyPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <DiceRoller />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
