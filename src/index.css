@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Fondamento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Fondamento&family=Lora:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -95,6 +95,7 @@
     @apply bg-background text-foreground;
     background-image: url('/parchment-bg.png');
     background-repeat: repeat;
+    font-family: 'Lora', serif;
   }
   
   h1, h2, h3, h4, h5 {
@@ -104,13 +105,17 @@
 
 @layer components {
   .dnd-card {
-    @apply relative bg-white border border-dnd-gold rounded-md shadow-md p-4 overflow-hidden;
+    @apply relative bg-white border border-dnd-gold rounded-md shadow-md p-4 overflow-hidden transition-all duration-200;
     background-image: url('/parchment-bg.png');
     background-repeat: repeat;
   }
   
+  .dnd-card:hover {
+    @apply shadow-lg transform-gpu scale-[1.01];
+  }
+  
   .dnd-input {
-    @apply bg-white/70 border border-dnd-gold rounded px-3 py-2 focus:border-dnd-purple focus:ring-1 focus:ring-dnd-purple;
+    @apply bg-white/70 border border-dnd-gold rounded px-3 py-2 focus:border-dnd-purple focus:ring-1 focus:ring-dnd-purple transition-colors;
   }
   
   .dnd-btn {
@@ -122,10 +127,84 @@
   }
   
   .stat-box {
-    @apply border-2 border-dnd-gold rounded-lg p-3 bg-white/80 text-center w-20 h-24 flex flex-col items-center justify-between;
+    @apply border-2 border-dnd-gold rounded-lg p-3 bg-white/80 text-center w-20 h-24 flex flex-col items-center justify-between transition-transform hover:scale-105;
   }
   
   .character-sheet {
     @apply dnd-card max-w-4xl mx-auto my-4;
   }
+
+  .story-link {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-dnd-purple after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+  
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+  
+  .pulse {
+    @apply animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite];
+  }
+}
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .glass-morphism {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-br from-dnd-purple via-dnd-purple/90 to-dnd-purple/70 bg-clip-text text-transparent;
+  }
+}
+
+@keyframes fade-in {
+  0% { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out forwards;
+}
+
+.animate-enter {
+  animation: fade-in 0.3s ease-out, scale-in 0.2s ease-out;
 }

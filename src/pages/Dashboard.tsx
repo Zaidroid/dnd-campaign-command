@@ -31,6 +31,11 @@ const Dashboard = () => {
     .filter(campaign => campaign.active)
     .slice(0, 2);
   
+  // Get recent characters (limit to 4)
+  const recentCharacters = [...mockCharacters]
+    .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime())
+    .slice(0, 4);
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
@@ -60,9 +65,8 @@ const Dashboard = () => {
                 {upcomingSessions.map((session) => (
                   <div 
                     key={session.id} 
-                    className="flex justify-between items-center p-3 bg-white/70 rounded-md hover:bg-white/90 transition-all border border-dnd-gold"
+                    className="flex justify-between items-center p-3 bg-white/70 rounded-md hover:bg-white/90 transition-all border border-dnd-gold cursor-pointer"
                     onClick={() => navigate(`/sessions`)}
-                    style={{ cursor: 'pointer' }}
                   >
                     <div>
                       <p className="font-medium">{session.title}</p>
@@ -112,9 +116,8 @@ const Dashboard = () => {
                 {activeCampaigns.map((campaign) => (
                   <div 
                     key={campaign.id} 
-                    className="p-3 bg-white/70 rounded-md hover:bg-white/90 transition-all border border-dnd-gold"
+                    className="p-3 bg-white/70 rounded-md hover:bg-white/90 transition-all border border-dnd-gold cursor-pointer"
                     onClick={() => navigate(`/campaign/${campaign.id}`)}
-                    style={{ cursor: 'pointer' }}
                   >
                     <p className="font-medium">{campaign.name}</p>
                     <p className="text-sm text-gray-600 mb-2">
@@ -157,18 +160,44 @@ const Dashboard = () => {
       
       <div className="mb-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-medieval text-dnd-purple">Your Characters</h2>
+          <h2 className="text-2xl font-medieval text-dnd-purple">Recent Characters</h2>
           <Button 
-            onClick={() => navigate('/character/create')}
-            className="bg-dnd-purple hover:bg-dnd-purple/90"
+            onClick={() => navigate('/characters')}
+            variant="outline"
+            className="border-dnd-gold"
           >
-            <Plus className="mr-2" size={16} />
-            Create Character
+            View All Characters
           </Button>
         </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {recentCharacters.map((character) => (
+            <Card key={character.id} className="dnd-card overflow-hidden border-2 hover:border-dnd-purple transition-all cursor-pointer"
+                  onClick={() => navigate(`/character/${character.id}`)}>
+              <div className="h-2 w-full bg-dnd-purple" />
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl font-medieval text-dnd-purple">
+                  {character.name}
+                </CardTitle>
+                <CardDescription>
+                  {character.race} {character.class}, Level {character.level}
+                </CardDescription>
+              </CardHeader>
+              <CardFooter className="pt-0">
+                <Button 
+                  className="bg-dnd-purple hover:bg-dnd-purple/90 w-full transition-colors" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/character/${character.id}`);
+                  }}
+                >
+                  View Sheet
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
-      
-      <CharacterGrid characters={mockCharacters} />
     </DashboardLayout>
   );
 };

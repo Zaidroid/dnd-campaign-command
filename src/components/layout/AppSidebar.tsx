@@ -30,7 +30,7 @@ const AppSidebar = () => {
 
   const sidebarItems = [
     { to: "/dashboard", icon: <Home size={20} />, label: "Dashboard" },
-    { to: "/dashboard", icon: <User size={20} />, label: "Characters" },
+    { to: "/characters", icon: <User size={20} />, label: "Characters" },
     { to: "/campaigns", icon: <BookOpen size={20} />, label: "Campaigns" },
     { to: "/sessions", icon: <Calendar size={20} />, label: "Sessions" },
     { to: "/party", icon: <Users size={20} />, label: "Party" },
@@ -71,7 +71,7 @@ const AppSidebar = () => {
                 to={item.to}
                 className={({ isActive }) => cn(
                   "flex items-center p-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent/20 transition-colors",
-                  (isActive || location.pathname === item.to) ? "bg-sidebar-accent/20 text-dnd-gold" : "",
+                  isActive ? "bg-sidebar-accent/20 text-dnd-gold" : "",
                   !isExpanded ? "justify-center" : ""
                 )}
               >
