@@ -1,100 +1,109 @@
 
-import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { 
-  Calendar, 
-  BookOpen, 
-  Users, 
-  User, 
-  Settings, 
-  LogOut,
-  Menu,
-  X,
-  Home
+import { Link, useLocation } from "react-router-dom";
+import {
+  BookOpenText,
+  CalendarDays,
+  Dice5,
+  Hammer,
+  Home,
+  ScrollText,
+  Settings,
+  Users,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ThemeSelector } from "@/components/theme/ThemeSelector";
 
 const AppSidebar = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-  const [isExpanded, setIsExpanded] = useState(true);
+  const currentPath = location.pathname;
 
-  const handleLogout = () => {
-    localStorage.removeItem('dnd-authenticated');
-    toast.success('Logged out successfully');
-    navigate('/auth');
-  };
-
-  const sidebarItems = [
-    { to: "/dashboard", icon: <Home size={20} />, label: "Dashboard" },
-    { to: "/characters", icon: <User size={20} />, label: "Characters" },
-    { to: "/campaigns", icon: <BookOpen size={20} />, label: "Campaigns" },
-    { to: "/sessions", icon: <Calendar size={20} />, label: "Sessions" },
-    { to: "/party", icon: <Users size={20} />, label: "Party" },
-    { to: "/settings", icon: <Settings size={20} />, label: "Settings" }
+  const sidebarLinks = [
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: Home,
+    },
+    {
+      name: "Characters",
+      path: "/characters",
+      icon: ScrollText,
+    },
+    {
+      name: "Campaigns",
+      path: "/campaigns",
+      icon: Hammer,
+    },
+    {
+      name: "Sessions",
+      path: "/sessions",
+      icon: CalendarDays,
+    },
+    {
+      name: "Party",
+      path: "/party",
+      icon: Users,
+    },
+    {
+      name: "Compendium",
+      path: "/compendium",
+      icon: BookOpenText,
+    },
   ];
 
   return (
-    <div className={cn(
-      "h-screen bg-sidebar transition-all duration-300 relative border-r border-dnd-gold flex flex-col",
-      isExpanded ? "w-64" : "w-16"
-    )}>
-      <div className="absolute top-4 right-4">
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="text-sidebar-foreground"
-        >
-          {isExpanded ? <X size={18} /> : <Menu size={18} />}
-        </Button>
+    <div className="flex flex-col h-screen bg-sidebar text-sidebar-foreground border-r border-sidebar-border w-64 fixed left-0 top-0 z-10">
+      <div className="p-4 border-b border-sidebar-border">
+        <Link to="/dashboard" className="flex items-center space-x-2">
+          <Dice5 size={28} className="text-sidebar-primary" />
+          <span className="font-medieval text-sidebar-foreground text-2xl">
+            D&D Companion
+          </span>
+        </Link>
       </div>
       
-      <div className="p-4 flex items-center justify-center border-b border-dnd-gold">
-        <h2 className={cn(
-          "font-medieval text-2xl text-dnd-gold transition-opacity",
-          isExpanded ? "opacity-100" : "opacity-0 hidden"
-        )}>
-          D&D Companion
-        </h2>
-        {!isExpanded && <span className="text-dnd-gold font-medieval text-2xl">D&D</span>}
-      </div>
-      
-      <nav className="flex-1 p-2">
-        <ul className="space-y-2">
-          {sidebarItems.map((item) => (
-            <li key={item.to + item.label}>
-              <NavLink 
-                to={item.to}
-                className={({ isActive }) => cn(
-                  "flex items-center p-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent/20 transition-colors",
-                  isActive ? "bg-sidebar-accent/20 text-dnd-gold" : "",
-                  !isExpanded ? "justify-center" : ""
+      <nav className="p-2 flex-1 overflow-auto scrollbar-none">
+        {sidebarLinks.map((link) => {
+          const isActive = currentPath === link.path || 
+            (link.path !== "/dashboard" && currentPath.startsWith(link.path));
+            
+          return (
+            <Link to={link.path} key={link.path}>
+              <Button
+                variant="ghost"
+                size="lg"
+                className={cn(
+                  "w-full justify-start mb-1 font-medium",
+                  isActive
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
                 )}
               >
-                <span className="mr-3">{item.icon}</span>
-                {isExpanded && <span>{item.label}</span>}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+                <link.icon size={18} className="mr-3" />
+                {link.name}
+              </Button>
+            </Link>
+          );
+        })}
       </nav>
       
-      <div className="p-4 border-t border-dnd-gold">
-        <Button
-          variant="ghost"
-          onClick={handleLogout}
-          className={cn(
-            "w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent/20",
-            !isExpanded && "justify-center"
-          )}
-        >
-          <LogOut size={20} className="mr-3" />
-          {isExpanded && <span>Logout</span>}
-        </Button>
+      <div className="p-4 border-t border-sidebar-border flex justify-between items-center">
+        <Link to="/settings">
+          <Button
+            variant="ghost"
+            size="sm"
+            className={cn(
+              "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+              currentPath === "/settings" &&
+                "bg-sidebar-accent text-sidebar-accent-foreground"
+            )}
+          >
+            <Settings size={18} className="mr-2" />
+            Settings
+          </Button>
+        </Link>
+        
+        <ThemeSelector />
       </div>
     </div>
   );

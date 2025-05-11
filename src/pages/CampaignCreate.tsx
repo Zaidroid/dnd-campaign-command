@@ -16,6 +16,7 @@ import {
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ArrowLeft, Save } from "lucide-react";
 import { toast } from "sonner";
+import { DescriptionGenerator } from "@/components/campaigns/DescriptionGenerator";
 
 const settings = [
   "Forgotten Realms",
@@ -41,6 +42,10 @@ const CampaignCreate = () => {
   
   const handleSettingChange = (value: string) => {
     setFormData(prev => ({ ...prev, setting: value }));
+  };
+  
+  const handleDescriptionUpdate = (newDescription: string) => {
+    setFormData(prev => ({ ...prev, description: newDescription }));
   };
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -109,7 +114,7 @@ const CampaignCreate = () => {
                 </Select>
               </div>
               
-              <div className="space-y-2">
+              <div className="space-y-2 relative">
                 <Label htmlFor="description">Campaign Description</Label>
                 <Textarea 
                   id="description" 
@@ -117,7 +122,11 @@ const CampaignCreate = () => {
                   value={formData.description} 
                   onChange={handleChange} 
                   placeholder="Describe your campaign and what players can expect..."
-                  className="min-h-[150px] bg-white/70 border-dnd-gold"
+                  className="min-h-[150px] bg-white/70 border-dnd-gold pr-10"
+                />
+                <DescriptionGenerator 
+                  initialDescription={formData.description}
+                  onApply={handleDescriptionUpdate}
                 />
               </div>
             </CardContent>
@@ -154,6 +163,10 @@ const CampaignCreate = () => {
               <div>
                 <h3 className="font-bold">Keep the pace moving</h3>
                 <p className="text-gray-600">Try to keep combat and decision-making flowing to maintain engagement and excitement.</p>
+              </div>
+              <div>
+                <h3 className="font-bold">Use AI for inspiration</h3>
+                <p className="text-gray-600">Try the AI description generator to spark ideas or enhance your campaign descriptions.</p>
               </div>
             </CardContent>
           </Card>

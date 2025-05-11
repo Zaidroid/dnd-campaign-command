@@ -8,6 +8,7 @@ export interface Character {
   background: string;
   alignment?: string;
   experience?: number;
+  initiative?: number; // Add initiative property
   abilityScores: {
     str: number;
     dex: number;

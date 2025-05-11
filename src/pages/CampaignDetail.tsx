@@ -19,6 +19,11 @@ import {
 import { Calendar, Users, ArrowLeft, Plus, Copy } from "lucide-react";
 import { toast } from "sonner";
 
+// Import our new components
+import { DmTools } from "@/components/campaigns/DmTools";
+import { SessionScheduler } from "@/components/campaigns/SessionScheduler";
+import { FriendManager } from "@/components/friends/FriendManager";
+
 const generateInviteCode = () => {
   return `DND-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 };
@@ -132,10 +137,7 @@ const CampaignDetail = () => {
                     <CardDescription>Upcoming and past game sessions</CardDescription>
                   </div>
                   {isDM && (
-                    <Button className="bg-dnd-purple hover:bg-dnd-purple/90">
-                      <Plus size={16} className="mr-2" />
-                      Schedule Session
-                    </Button>
+                    <SessionScheduler campaignId={campaign.id} isDM={true} />
                   )}
                 </CardHeader>
                 <CardContent>
@@ -163,9 +165,7 @@ const CampaignDetail = () => {
                       <Calendar size={40} className="mx-auto mb-2 text-gray-400" />
                       <p className="text-gray-500 mb-4">No sessions scheduled yet</p>
                       {isDM && (
-                        <Button className="bg-dnd-purple hover:bg-dnd-purple/90">
-                          Schedule First Session
-                        </Button>
+                        <SessionScheduler campaignId={campaign.id} isDM={false} />
                       )}
                     </div>
                   )}
@@ -330,18 +330,19 @@ const CampaignDetail = () => {
                 <CardTitle className="font-medieval text-dnd-purple">DM Tools</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button className="w-full" variant="outline">
-                  Manage NPCs
-                </Button>
-                <Button className="w-full" variant="outline">
-                  Combat Tracker
-                </Button>
-                <Button className="w-full" variant="outline">
-                  Manage Maps
-                </Button>
+                <DmTools campaignId={campaign.id} />
               </CardContent>
             </Card>
           )}
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-medieval text-dnd-purple">Party Management</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center">
+              <FriendManager />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </DashboardLayout>
