@@ -156,31 +156,31 @@ export const ThemeSelector = ({ collapsed = false }) => {
               <RadioGroup
                 value={selectedAccent}
                 onValueChange={(value) => setSelectedAccent(value as typeof accentColor)}
-                className="grid grid-cols-5 gap-4"
+                className="grid grid-cols-5 gap-4 theme-selector-grid"
               >
-                {Object.entries(accentColors).map(([color, styles]) => (
-                  <div key={color}>
+                {Object.entries(accentColors).map(([colorName, styles]) => (
+                  <div key={colorName}>
                     <RadioGroupItem
-                      value={color}
-                      id={color}
+                      value={colorName}
+                      id={colorName}
                       className="peer sr-only"
                     />
                     <Label
-                      htmlFor={color}
-                      className={`flex flex-col items-center justify-between rounded-md border-2 border-muted p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:${currentAccent.border} [&:has([data-state=checked])]:${currentAccent.border}`}
+                      htmlFor={colorName}
+                      className={`flex flex-col items-center justify-between rounded-md border-2 border-muted p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:${styles.border} [&:has([data-state=checked])]:${styles.border}`}
                     >
                       <div className={`w-6 h-6 rounded-full ${styles.bg} mb-2 relative`}>
-                        {selectedAccent === color && (
+                        {selectedAccent === colorName && (
                           <CheckCircle2 
                             className={`absolute -right-2 -top-2 ${
-                              color === "gold" ? "text-dnd-purple" : "text-dnd-gold"
+                              colorName === "gold" ? "text-dnd-purple" : "text-dnd-gold"
                             }`} 
                             size={16} 
                           />
                         )}
                       </div>
-                      <span className={selectedAccent === color ? styles.text : ""}>
-                        {color.charAt(0).toUpperCase() + color.slice(1)}
+                      <span className={selectedAccent === colorName ? styles.text : ""}>
+                        {colorName.charAt(0).toUpperCase() + colorName.slice(1)}
                       </span>
                     </Label>
                   </div>
@@ -195,7 +195,7 @@ export const ThemeSelector = ({ collapsed = false }) => {
             </Button>
             <Button 
               onClick={handleSave} 
-              className={`${currentAccent.bg} ${currentAccent.hover} ${
+              className={`${accentColors[selectedAccent].bg} ${accentColors[selectedAccent].hover} ${
                 selectedAccent === "gold" ? "text-black" : "text-white"
               }`}
             >
