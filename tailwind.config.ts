@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,12 +62,24 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				dnd: {
+					'red': '#A02D2F',
+					'parchment': '#F2EAD3',
+					'dark': '#24282F',
+					'purple': '#3C1361',
+					'green': '#1A4033',
+					'gold': '#C9AB59',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			backgroundImage: {
+				'parchment': "url('/parchment-bg.png')",
+				'tavern': "url('/tavern-bg.jpg')",
 			},
 			keyframes: {
 				'accordion-down': {
@@ -84,11 +97,23 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'dice-roll': {
+					'0%': { transform: 'rotate(0deg)' },
+					'25%': { transform: 'rotate(90deg)' },
+					'50%': { transform: 'rotate(180deg)' },
+					'75%': { transform: 'rotate(270deg)' },
+					'100%': { transform: 'rotate(360deg)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'dice-roll': 'dice-roll 1s ease-in-out'
+			},
+			fontFamily: {
+				'medieval': ['MedievalSharp', 'cursive'],
+				'fantasy': ['Fondamento', 'cursive'],
 			}
 		}
 	},
