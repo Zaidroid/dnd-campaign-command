@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark" | "system";
@@ -13,6 +12,7 @@ interface ThemeContextType {
   accentColor: AccentColor;
   setTheme: (theme: Theme) => void;
   setAccentColor: (color: AccentColor) => void;
+  resolvedTheme: "light" | "dark"; // Current actual theme after resolving 'system'
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -26,40 +26,56 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     () => (localStorage.getItem("accentColor") as AccentColor) || "purple"
   );
 
-  useEffect(() => {
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+
+  // Function to determine and set the actual theme based on system preference or user choice
+  const updateTheme = () => {
     const root = window.document.documentElement;
+    let effectiveTheme: "light" | "dark";
     
-    // Apply theme
+    // Determine the effective theme
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
+      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
-        
-      root.classList.toggle("dark", systemTheme === "dark");
-      root.style.colorScheme = systemTheme;
     } else {
-      root.classList.toggle("dark", theme === "dark");
-      root.style.colorScheme = theme;
+      effectiveTheme = theme as "light" | "dark";
     }
     
+    // Update state with the resolved theme
+    setResolvedTheme(effectiveTheme);
+    
+    // Apply theme
+    root.classList.remove("light", "dark");
+    root.classList.add(effectiveTheme);
+    root.style.colorScheme = effectiveTheme;
+    
     localStorage.setItem("theme", theme);
+  };
+
+  // Apply theme whenever it changes
+  useEffect(() => {
+    updateTheme();
+    
+    // Listen for system preference changes if using 'system' theme
+    if (theme === "system") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = () => updateTheme();
+      
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
   }, [theme]);
   
+  // Apply accent color whenever it changes
   useEffect(() => {
     const root = window.document.documentElement;
     
-    // Remove existing accent classes
-    root.classList.remove(
-      "accent-purple",
-      "accent-red",
-      "accent-green",
-      "accent-blue",
-      "accent-gold"
-    );
-    
-    // Add new accent class
-    root.classList.add(`accent-${accentColor}`);
+    // Set CSS variable to apply accent color throughout the app
+    root.style.setProperty("--accent-color", `var(--dnd-${accentColor})`);
+
+    // Update data attribute for accent color - useful for conditional styling
+    root.setAttribute("data-accent", accentColor);
     
     localStorage.setItem("accentColor", accentColor);
   }, [accentColor]);
@@ -73,7 +89,15 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, accentColor, setTheme, setAccentColor }}>
+    <ThemeContext.Provider 
+      value={{ 
+        theme, 
+        accentColor, 
+        setTheme, 
+        setAccentColor,
+        resolvedTheme
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
