@@ -71,7 +71,13 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   useEffect(() => {
     const root = window.document.documentElement;
     
-    // Set CSS variable to apply accent color throughout the app
+    // Remove all accent classes first
+    root.classList.remove("accent-purple", "accent-red", "accent-green", "accent-blue", "accent-gold");
+    
+    // Add the new accent class
+    root.classList.add(`accent-${accentColor}`);
+    
+    // Set CSS variable to apply accent color throughout the app - using the proper variable name
     root.style.setProperty("--accent-color", `var(--dnd-${accentColor})`);
 
     // Update data attribute for accent color - useful for conditional styling
