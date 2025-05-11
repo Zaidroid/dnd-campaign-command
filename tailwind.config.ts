@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -72,6 +71,13 @@ export default {
 					'gold': '#C9AB59',
 					'blue': '#2A4D69',
 				},
+				theme: {
+					'purple': 'hsl(271, 48%, 48%)',
+					'red': 'hsl(0, 73%, 41%)',
+					'green': 'hsl(153, 57%, 18%)',
+					'blue': 'hsl(210, 45%, 28%)',
+					'gold': 'hsl(43, 50%, 57%)',
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -86,20 +92,12 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				},
 				'dice-roll': {
 					'0%': { transform: 'rotate(0deg)' },
@@ -133,12 +131,8 @@ export default {
 					}
 				},
 				'pulse': {
-					'0%, 100%': {
-						opacity: '1'
-					},
-					'50%': {
-						opacity: '0.5'
-					}
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' }
 				}
 			},
 			animation: {
@@ -154,6 +148,7 @@ export default {
 			fontFamily: {
 				'medieval': ['MedievalSharp', 'cursive'],
 				'fantasy': ['Fondamento', 'cursive'],
+				'serif': ['Lora', 'serif']
 			}
 		}
 	},
