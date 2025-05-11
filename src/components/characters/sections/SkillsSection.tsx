@@ -40,8 +40,9 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ character }) => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {skillsList.map((skill) => {
-          const isProficient = skills.includes(skill.name.toLowerCase());
-          const expertised = character.expertise?.includes(skill.name.toLowerCase()) || false;
+          const skillNameLower = skill.name.toLowerCase();
+          const isProficient = skills?.includes(skillNameLower) || false;
+          const expertised = character.expertise?.includes(skillNameLower) || false;
           const abilityMod = getModifier(abilityScores[skill.ability as keyof typeof abilityScores]);
           
           let bonus = abilityMod;

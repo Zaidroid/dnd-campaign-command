@@ -4,11 +4,18 @@ export interface Campaign {
   name: string;
   description: string;
   active: boolean;
+  setting?: string;
+  startDate?: string;
   dmId: string;
   players: Array<{
     id: string;
     name: string;
     characterId?: string;
+    character?: {
+      name: string;
+      race: string;
+      class: string;
+    };
   }>;
   sessions: Array<{
     id: string;
@@ -21,6 +28,8 @@ export interface Campaign {
     title: string;
     content: string;
     createdAt: string;
+    author?: string;
+    date?: string;
   }>;
   npcs?: Array<{
     id: string;

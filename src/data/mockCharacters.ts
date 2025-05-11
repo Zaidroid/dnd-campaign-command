@@ -138,6 +138,8 @@ export const mockCharacters: Character[] = [
         description: "You've learned to put the weight of a weapon to your advantage, letting its momentum empower your strikes. You gain a +10 damage bonus if you take a -5 penalty to attack rolls with heavy weapons. Additionally, when you score a critical hit or reduce a creature to 0 HP, you can make one additional melee attack as a bonus action.",
       },
     ],
+    
+    lastUpdated: new Date().toISOString(),
   },
   {
     id: "2",
@@ -347,5 +349,7 @@ export const mockCharacters: Character[] = [
         description: "You are always on the lookout for danger. You gain +5 to initiative, you can't be surprised while you are conscious, and other creatures don't gain advantage on attack rolls against you as a result of being hidden from you.",
       },
     ],
+    
+    lastUpdated: new Date().toISOString(),
   },
 ];

@@ -116,8 +116,8 @@ const CampaignDetail = () => {
                     
                     <div>
                       <h3 className="font-medieval text-lg mb-2">Campaign Settings</h3>
-                      <p>Setting: {campaign.setting}</p>
-                      <p>Start Date: {new Date(campaign.startDate).toLocaleDateString()}</p>
+                      <p>Setting: {campaign.setting || 'Not specified'}</p>
+                      <p>Start Date: {campaign.startDate ? new Date(campaign.startDate).toLocaleDateString() : 'Not specified'}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -271,7 +271,7 @@ const CampaignDetail = () => {
                         <div key={index} className="p-4 bg-white/70 rounded-md border border-dnd-gold/30">
                           <h3 className="font-medieval text-lg mb-1">{note.title}</h3>
                           <p className="text-xs text-gray-500 mb-2">
-                            Added by {note.author} on {new Date(note.date).toLocaleDateString()}
+                            Added by {note.author || 'Unknown'} on {note.date ? new Date(note.date).toLocaleDateString() : new Date(note.createdAt).toLocaleDateString()}
                           </p>
                           <p className="text-gray-700 whitespace-pre-line">{note.content}</p>
                         </div>

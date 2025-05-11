@@ -7,7 +7,7 @@ interface FeaturesSectionProps {
 }
 
 const FeaturesSection: React.FC<FeaturesSectionProps> = ({ character }) => {
-  const { features, racialTraits, feats } = character;
+  const { features = [], racialTraits = [], feats = [] } = character;
   
   return (
     <div>

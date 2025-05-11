@@ -24,38 +24,81 @@ export interface Character {
   armorClass: number;
   speed: number;
   proficiencyBonus: number;
-  savingThrows?: {
-    str: boolean;
-    dex: boolean;
-    con: boolean;
-    int: boolean;
-    wis: boolean;
-    cha: boolean;
+  savingThrows: string[]; // Changed from object to string array
+  skills: string[]; // Changed from object to string array
+  proficiencies: {
+    armor?: string[];
+    weapons?: string[];
+    tools?: string[];
   };
-  skills?: {
-    [key: string]: boolean;
-  };
-  proficiencies?: string[];
   equipment?: {
+    armor?: {
+      name: string;
+      ac: number;
+    };
+    shield?: {
+      name: string;
+      bonus: number;
+    };
+    weapons?: {
+      name: string;
+      damage: string;
+      damageType: string;
+      properties: string[];
+    }[];
+  };
+  inventory?: {
     id: string;
     name: string;
     quantity: number;
+    weight: number;
     description?: string;
-    equipped?: boolean;
   }[];
   features?: {
     name: string;
+    description: string;
     source: string;
-    description: string;
   }[];
-  spells?: {
-    id: string;
+  racialTraits?: {
     name: string;
-    level: number;
-    school: string;
     description: string;
-    prepared: boolean;
   }[];
+  feats?: {
+    name: string;
+    description: string;
+  }[];
+  spellcasting?: {
+    spellcastingAbility: string;
+    spellSaveDC: number;
+    spellAttackBonus: number;
+    spellSlots?: {
+      [key: number]: number;
+    };
+    usedSpellSlots?: {
+      [key: number]: number;
+    };
+    spells?: {
+      name: string;
+      level: number;
+      school: string;
+      castingTime: string;
+      range: string;
+      components: string;
+      duration: string;
+      description: string;
+      prepared?: boolean;
+    }[];
+  };
+  languages?: string[];
+  currency?: {
+    platinum: number;
+    gold: number;
+    electrum: number;
+    silver: number;
+    copper: number;
+  };
+  inspiration?: boolean;
+  expertise?: string[];
   description?: string;
   personality?: string;
   ideals?: string;
