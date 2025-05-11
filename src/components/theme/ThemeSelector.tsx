@@ -196,7 +196,7 @@ export const ThemeSelector = ({ collapsed = false }) => {
             <Button 
               onClick={handleSave} 
               className={`${currentAccent.bg} ${currentAccent.hover} ${
-                color === "gold" ? "text-black" : "text-white"
+                selectedAccent === "gold" ? "text-black" : "text-white"
               }`}
             >
               Save Changes
