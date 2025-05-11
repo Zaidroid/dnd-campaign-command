@@ -1,4 +1,3 @@
-
 import { Character } from "@/types/character";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 

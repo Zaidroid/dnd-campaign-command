@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import CharacterSheet from "@/components/characters/CharacterSheet";

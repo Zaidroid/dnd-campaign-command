@@ -1,4 +1,3 @@
-
 import { Character } from "@/types/character";
 
 interface SkillsSectionProps {

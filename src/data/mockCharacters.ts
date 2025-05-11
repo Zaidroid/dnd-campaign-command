@@ -1,4 +1,3 @@
-
 import { Character } from "@/types/character";
 
 export const mockCharacters: Character[] = [

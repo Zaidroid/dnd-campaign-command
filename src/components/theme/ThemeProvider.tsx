@@ -18,14 +18,14 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<Theme>(
-    () => (localStorage.getItem("theme") as Theme) || "system"
-  );
+  // Default to light theme
+  const [theme, setThemeState] = useState<Theme>("light");
   
   const [accentColor, setAccentColorState] = useState<AccentColor>(
     () => (localStorage.getItem("accentColor") as AccentColor) || "purple"
   );
 
+  // Initialize resolvedTheme based on the default theme
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
 
   // Function to determine and set the actual theme based on system preference or user choice
@@ -50,10 +50,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.classList.add(effectiveTheme);
     root.style.colorScheme = effectiveTheme;
     
+    // Store the user's explicit choice, or 'system'
     localStorage.setItem("theme", theme);
   };
 
-  // Apply theme whenever it changes
+  // Apply theme whenever it changes or on initial load
   useEffect(() => {
     updateTheme();
     

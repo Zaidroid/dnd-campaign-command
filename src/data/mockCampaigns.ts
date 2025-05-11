@@ -1,4 +1,3 @@
-
 import { Campaign } from "@/types/campaign";
 
 export const mockCampaigns: Campaign[] = [

@@ -1,4 +1,3 @@
-
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import CampaignGrid from "@/components/campaigns/CampaignGrid";
 import { mockCampaigns } from "@/data/mockCampaigns";

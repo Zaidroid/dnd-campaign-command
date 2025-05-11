@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import AppSidebar from './AppSidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
